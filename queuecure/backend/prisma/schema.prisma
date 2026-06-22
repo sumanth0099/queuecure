@@ -1,0 +1,39 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  id          String    @id @default(uuid())
+  token       Int
+  name        String
+  trackingId  String    @unique @default(uuid())
+  status      String    @default("waiting") // waiting | serving | completed | skipped
+  createdAt   DateTime  @default(now())
+  calledAt    DateTime?
+  completedAt DateTime?
+
+  consultations Consultation[]
+}
+
+model Settings {
+  id                   Int @id @default(1)
+  avgConsultationTime  Int @default(10) // in minutes
+}
+
+model Consultation {
+  id        String   @id @default(uuid())
+  patientId String
+  startTime DateTime
+  endTime   DateTime?
+  duration  Int?     // in minutes
+
+  patient   Patient  @relation(fields: [patientId], references: [id])
+}
