@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: queuecure-backend
+    env: docker
+    dockerfilePath: backend/Dockerfile
+    buildCommand: ""
+    startCommand: ""
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromSecret: true
+      - key: FRONTEND_URL
+        fromSecret: true
+      - key: PORT
+        value: "3001"
+      - key: NODE_ENV
+        value: "production"
+  - type: static
+    name: queuecure-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    publishPath: frontend/dist
+    envVars:
+      - key: VITE_BACKEND_URL
+        fromSecret: true
