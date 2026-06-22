@@ -22,4 +22,5 @@ RUN cp -r /app/frontend/dist /app/backend/public
 
 EXPOSE 3001
 
-CMD ["node", "src/index.js"]
+# Run database migrations and start the server
+CMD npx prisma db push && node src/index.js
