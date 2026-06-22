@@ -2,7 +2,7 @@ services:
   - type: web
     name: queuecure-backend
     env: docker
-    dockerfilePath: backend/Dockerfile
+    dockerfilePath: Dockerfile
     buildCommand: ""
     startCommand: ""
     healthCheckPath: /health
