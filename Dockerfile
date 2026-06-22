@@ -3,14 +3,14 @@ FROM node:20-alpine
 # ── Step 1: Build the frontend ──
 WORKDIR /app/frontend
 COPY queuecure/frontend/package*.json ./
-RUN npm ci
+RUN npm install
 COPY queuecure/frontend/ ./
 RUN npm run build
 
 # ── Step 2: Set up the backend ──
 WORKDIR /app/backend
 COPY queuecure/backend/package*.json ./
-RUN npm ci
+RUN npm install
 COPY queuecure/backend/ ./
 RUN npx prisma generate
 
