@@ -1,6 +1,9 @@
 import { io } from "socket.io-client";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
+// In production the backend is served from the same origin.
+// In local dev, fallback to localhost:3001.
+const BACKEND_URL =
+  import.meta.env.DEV ? "http://localhost:3001" : window.location.origin;
 
 // Singleton socket instance shared across the app
 const socket = io(BACKEND_URL, {
